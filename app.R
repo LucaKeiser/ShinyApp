@@ -12,7 +12,7 @@ library(scales)
 
 #setwd("C:/Users/LucaK/Desktop/Uni Luzern/Master/R_RStudio_UniLU")
 
-europe <- read_rds("C:/Users/LucaK/Desktop/Uni Luzern/Master/R_RStudio_UniLU/Web_Applications_unsing_Shiny/01_data/europe.rds") %>% 
+europe <- read_rds("europe.rds") %>% 
   # create Month and AvgTemperatureC
   mutate(Month = month(Month,label = TRUE),
          AvgTemperatureC = (AvgTemperatureF - 32) / 1.8)
@@ -308,14 +308,14 @@ server <- function(input, output, session){
   # observer 1
   observe({
     
-    print(input$countries)
+    # print(input$countries)
     
     new_city_choices <- europe %>% 
       filter(Country %in% c(input$countries)) %>% 
       pull(City) %>% 
       unique()
     
-    print(new_city_choices)
+    # print(new_city_choices)
     
     updateSelectInput(session, 
                       inputId = "cities",
