@@ -73,7 +73,7 @@ ui <- fluidPage(
                   label = "Cities",
                   choices = c(unique(europe$City)),
                   multiple = TRUE,
-                  selected = NULL),
+                  selected = "Zurich"),
       
       
       # add a slider input
@@ -118,8 +118,9 @@ ui <- fluidPage(
                            br(),
                            # create fluidRows to split outputs
                            # fluidRows can be applied to ever element...
-                           fluidRow(column(plotOutput("plot_1"), width = 5),
-                                    column(plotOutput("plot_2"), width = 7)),
+                           fluidRow(column(plotOutput("plot_1"), width = 12)),
+                           hr(),
+                           fluidRow(column(plotOutput("plot_2"), width = 12)),
                            hr(),
                            fluidRow(column(plotOutput("plot_3"), width = 12)),
                            hr()),
@@ -252,8 +253,7 @@ server <- function(input, output, session){
       geom_point(aes(color = City),
                  size = ifelse(length(input$countries) <= 3,
                                2,
-                               1),
-                 show.legend = FALSE) +
+                               1)) +
       scale_x_continuous(breaks = pretty_breaks(n = (input$year[2] - input$year[1]))) +
       theme_light() + 
       labs(title = glue("Temperature Changes over Years"),
@@ -295,7 +295,7 @@ server <- function(input, output, session){
                                              60, 15)) + 
       theme_light() + 
       labs(title = glue("Average Temperature"),
-           x = "Day",
+           x = "Day of the Month",
            y = "",
            fill = glue("Average Temperature")) + 
       facet_wrap(~ City) 
